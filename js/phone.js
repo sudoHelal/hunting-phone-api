@@ -1,4 +1,4 @@
-const loadPhone = async (searchText, isShowAll) => {
+const loadPhone = async (searchText='13', isShowAll) => {
   const response = await fetch(
     `https://openapi.programming-hero.com/api/phones?search=${searchText}`
   );
@@ -35,7 +35,7 @@ const displayPhone = (phones, isShowAll) => {
                       <h2 class="card-title">${phone.phone_name}</h2>
                       <p>If a dog chews shoes whose shoes does he choose?</p>
                       <div class="card-actions justify-center">
-                        <button onclick="handleShowDetails('${phone.slug}'), my_modal_1.showModal()" class="btn btn-primary">Show Details</button>
+                        <button onclick="handleShowDetails('${phone.slug}')" class="btn btn-primary">Show Details</button>
                       </div>
                     </div>
                     
@@ -46,13 +46,27 @@ const displayPhone = (phones, isShowAll) => {
 toggleLoadSpinner(false);
 };
 const handleShowDetails = async(id) =>{
-    console.log("Click show details",id);
     const response = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`);
     const data = await response.json();
     const phoneDetails = data.data;
-    console.log(phoneDetails);
+    displayPhoneDetails(phoneDetails);
 }
-
+const displayPhoneDetails = (phoneDetails) =>{
+    console.log(phoneDetails);
+    const phoneDetailsName = document.getElementById('phone-details-name');
+    phoneDetailsName.innerText = phoneDetails.name;
+    const phoneDetailsContainer = document.getElementById('phone-details-container');
+    phoneDetailsContainer.innerHTML = `
+    <img src="${phoneDetails.image}" alt="" />
+    <h3><span class="text-xl font-bold">${phoneDetails.name}</span>
+    <p><span>Brand: </span>${phoneDetails.brand}</p>
+    <p><span>Memory: </span>${phoneDetails?.mainFeatures?.memory}</p>
+    <p><span>Bluetooth: </span>${phoneDetails?.others?.Bluetooth || "Bluetootjh unavailable"}</p>
+    <p><span>Sensors: </span>${phoneDetails?.mainFeatures?.sensors || "Sensor unavailable"}</p>
+    `
+    // show the modal
+    my_modal_1.showModal();
+}
 const handleSearch = (isShowAll) =>{
     toggleLoadSpinner(true);
     const searchInput = document.getElementById("searchInput");
@@ -71,3 +85,4 @@ const toggleLoadSpinner = (handleSearchClick) =>{
 const handleShowAll = () =>{
     handleSearch(true);
 }
+loadPhone();
