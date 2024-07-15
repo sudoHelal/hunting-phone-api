@@ -34,8 +34,8 @@ const displayPhone = (phones, isShowAll) => {
                     <div class="card-body">
                       <h2 class="card-title">${phone.phone_name}</h2>
                       <p>If a dog chews shoes whose shoes does he choose?</p>
-                      <div class="card-actions justify-end">
-                        <button class="btn btn-primary">Show Details</button>
+                      <div class="card-actions justify-center">
+                        <button onclick="handleShowDetails('${phone.slug}'), my_modal_1.showModal()" class="btn btn-primary">Show Details</button>
                       </div>
                     </div>
                     
@@ -45,6 +45,13 @@ const displayPhone = (phones, isShowAll) => {
 //   hide spinner or loading
 toggleLoadSpinner(false);
 };
+const handleShowDetails = async(id) =>{
+    console.log("Click show details",id);
+    const response = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`);
+    const data = await response.json();
+    const phoneDetails = data.data;
+    console.log(phoneDetails);
+}
 
 const handleSearch = (isShowAll) =>{
     toggleLoadSpinner(true);
