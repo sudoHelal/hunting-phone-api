@@ -40,9 +40,26 @@ const displayPhone = (phones) => {
                     `;
                     phoneContainer.appendChild(phoneCard);
   });
+//   hide spinner or loading
+toggleLoadSpinner(false);
 };
+
 const handleSearch = () =>{
+    toggleLoadSpinner(true);
     const searchInput = document.getElementById("searchInput");
     const searchText = searchInput.value;
     loadPhone(searchText);
+}
+const toggleLoadSpinner = (handleSearchClick) =>{
+    const loadingSpinner = document.getElementById("loading-spinner");
+    if(handleSearchClick){
+        loadingSpinner.classList.remove("hidden");
+    }
+    else{
+        loadingSpinner.classList.add("hidden");
+    }
+
+
+    
+
 }
