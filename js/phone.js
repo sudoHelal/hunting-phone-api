@@ -6,11 +6,21 @@ const loadPhone = async (searchText) => {
   const phone = data.data;
   displayPhone(phone);
 };
-const displayPhone = (phone) => {
-  console.log(phone);
+const displayPhone = (phones) => {
+  console.log(phones);
   const phoneContainer = document.getElementById("phone-container");
+//   clear phone container before adding new phone cards
     phoneContainer.innerText = '';
-  phone.forEach((phone) => {
+    // display show all button if there are more than 12 phones
+    const showAllButton = document.getElementById("show-all-button");
+    if(phones.length > 12){
+        showAllButton.classList.remove("hidden");
+    }else{
+        showAllButton.classList.add("hidden");
+    }
+    // display only first 12 phones
+    phones = phones.slice(0, 12);
+  phones.forEach((phone) => {
     const phoneCard = document.createElement("div");
     phoneCard.classList = `card bg-base-100 shadow-xl`;
     phoneCard.innerHTML = `
